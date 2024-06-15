@@ -106,8 +106,18 @@
             justify-content: space-between;
             align-items: center;
 
+            .bars {
+                width: 5%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 25px;
+                color: white;
+                display: none;
+            }
+
             .left {
-                width: 70%;
+                width: 65%;
                 display: flex;
                 justify-content: start;
                 align-items: center;
@@ -269,6 +279,321 @@
                         }
                     }
                 }
+            }
+        }
+
+        .headerBottom {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .headerBottomBox {
+                width: 12%;
+                height: 40px;
+                border-radius: 5px;
+                border-bottom: 3px solid #7280A9;
+                background-color: #642CA9;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                a {
+                    text-decoration: none;
+                    color: white;
+                    font-size: 15px;
+                    font-weight: 600;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100%;
+        background-color: #333;
+        color: white;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        overflow-y: auto;
+
+        .sidebarClose {
+            align-self: flex-end;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .sidebarContent {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+
+            a {
+                padding: 10px 0;
+                text-decoration: none;
+                color: white;
+                font-size: 18px;
+
+                &:hover {
+                    color: #007bff;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:1200px) and (max-width:1400px) {
+    .header {
+        min-height: 100px;
+
+        .container {
+            .headerMiddle {
+                .bars {
+                    display: block;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+
+            .headerBottom {
+                display: none;
+            }
+
+            .headerTop {
+                .information {
+                    width: 60%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:992px) and (max-width:1200px) {
+    .header {
+        min-height: 100px;
+
+        .container {
+            width: 90%;
+
+            .headerTop {
+                .information {
+                    width: 65%;
+
+                }
+            }
+
+            .headerMiddle {
+                .bars {
+                    display: block;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .account {
+                    .profil {
+                        width: 55%;
+                    }
+                }
+            }
+
+            .headerBottom {
+                display: none;
+            }
+        }
+    }
+}
+
+
+@media screen and (min-width:768px) and (max-width:992px) {
+    .header {
+        min-height: 100px;
+
+        .container {
+            width: 95%;
+
+            .headerTop {
+                .icons {
+                    width: 20%;
+                }
+
+                .information {
+                    width: 65%;
+                    display: none;
+                }
+            }
+
+            .headerMiddle {
+                .bars {
+                    display: block;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .account {
+                    .profil {
+                        width: 55%;
+                    }
+                }
+            }
+
+            .headerBottom {
+                display: none;
+            }
+        }
+    }
+}
+
+@media screen and (min-width:576px) and (max-width:768px) {
+    .header {
+        min-height: 140px;
+
+        .container {
+            width: 95%;
+
+            .headerTop {
+                .icons {
+                    width: 20%;
+                }
+
+                .information {
+                    width: 65%;
+                    display: none;
+                }
+            }
+
+            .headerMiddle {
+                height: 80px;
+                display: flex;
+                align-items: start;
+                justify-content: start;
+                gap: 10px;
+
+                .bars {
+                    display: block;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 30px;
+                }
+
+                .left {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: start;
+                    justify-content: center;
+                    gap: 1px;
+
+                    .search {
+                        width: 100%;
+
+                        input {
+                            width: 90%;
+                        }
+
+                        button {
+                            width: 10%;
+                        }
+                    }
+                }
+
+                .account {
+                    display: none;
+
+                    .profil {
+                        width: 55%;
+                    }
+                }
+            }
+
+            .headerBottom {
+                display: none;
+            }
+        }
+    }
+}
+
+@media screen and (min-width:300px) and (max-width:576px) {
+    .header {
+        min-height: 140px;
+
+        .container {
+            width: 95%;
+
+            .headerTop {
+                .icons {
+                    width: 45%;
+                }
+
+                .information {
+                    width: 65%;
+                    display: none;
+                }
+            }
+
+            .headerMiddle {
+                height: 80px;
+                display: flex;
+                align-items: start;
+                justify-content: start;
+                gap: 10px;
+
+                .bars {
+                    display: block;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 30px;
+                }
+
+                .left {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: start;
+                    justify-content: center;
+                    gap: 1px;
+
+                    .logo {
+                        width: 30%;
+                    }
+
+                    .search {
+                        width: 100%;
+
+                        input {
+                            width: 90%;
+                        }
+
+                        button {
+                            width: 10%;
+                        }
+                    }
+                }
+
+                .account {
+                    display: none;
+
+                    .profil {
+                        width: 55%;
+                    }
+                }
+            }
+
+            .headerBottom {
+                display: none;
             }
         }
     }

@@ -1,0 +1,124 @@
+$colors: #ff0000, blue, yellow, green, black, white;
+$pastel-colors: #ffcccc, #ccccff, #ffffcc, #ccffcc, #cccccc, #ffffff;
+$animation-duration: 5s;
+
+@keyframes borderColorChange {
+    0% {
+        border-color: nth($colors, 1);
+    }
+
+    16% {
+        border-color: nth($colors, 2);
+    }
+
+    33% {
+        border-color: nth($colors, 3);
+    }
+
+    50% {
+        border-color: nth($colors, 4);
+    }
+
+    66% {
+        border-color: nth($colors, 5);
+    }
+
+    83% {
+        border-color: nth($colors, 6);
+    }
+
+    100% {
+        border-color: nth($colors, 1);
+    }
+}
+
+@keyframes pastelBorderColorChange {
+    0% {
+        border-color: nth($pastel-colors, 1);
+    }
+
+    16% {
+        border-color: nth($pastel-colors, 2);
+    }
+
+    33% {
+        border-color: nth($pastel-colors, 3);
+    }
+
+    50% {
+        border-color: nth($pastel-colors, 4);
+    }
+
+    66% {
+        border-color: nth($pastel-colors, 5);
+    }
+
+    83% {
+        border-color: nth($pastel-colors, 6);
+    }
+
+    100% {
+        border-color: nth($pastel-colors, 1);
+    }
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.page {
+    width: 100%;
+    min-height: 100px;
+    background-color: #292A2D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .container {
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .gameImg {
+            width: 7%;
+            border-radius: 50%;
+            padding: 3px 4px;
+
+            img {
+                border-radius: 50%;
+                width: 100%;
+                cursor: pointer;
+                border: 2px solid nth($colors, 1);
+                animation: borderColorChange $animation-duration infinite;
+
+                &:hover {
+                    animation: pastelBorderColorChange $animation-duration infinite;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:1200px) and (max-width:1400px) {
+
+}
+
+@media screen and (min-width:992px) and (max-width:1200px) {
+
+}
+
+
+@media screen and (min-width:768px) and (max-width:992px) {
+
+}
+
+@media screen and (min-width:576px) and (max-width:768px) {
+ 
+}
+
+@media screen and (min-width:300px) and (max-width:576px) {
+ 
+}

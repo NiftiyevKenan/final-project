@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from './Header.module.scss'
 import { FaInstagram } from "react-icons/fa";
 import { IoLogoDiscord } from "react-icons/io5";
@@ -10,10 +10,21 @@ import { FaRegBell } from "react-icons/fa";
 import { FaRegEnvelope } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
+import { HiGift } from "react-icons/hi";
+import { FaTimes } from "react-icons/fa";
 import TurkishFlag from '../../Assets/Images/tr.webp'
 import s2gepin from '../../Assets/Images/docs2gpin_logo_text_site_icin_beyaz optimize_b4ecb75d037cd64d81723a8a6900e9b2.webp'
 
 const Header = () => {
+
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
+
   return (
     <div className={style.header}>
       <div className={style.container}>
@@ -51,6 +62,9 @@ const Header = () => {
           </div>
         </div>
         <div className={style.headerMiddle}>
+          <div className={style.bars} onClick={toggleSidebar}>
+            <FaBars />
+          </div>
           <div className={style.left}>
             <div className={style.logo}>
               <img src={s2gepin} alt="logo" />
@@ -95,7 +109,52 @@ const Header = () => {
             </div>
           </div>
         </div>
+        <div className={style.headerBottom}>
+          <div className={style.headerBottomBox}>
+            <a href="">Tüm Ürünler</a>
+          </div>
+          <div className={style.headerBottomBox}>
+            <a href=""> PUBG MOBILE</a>
+          </div>
+          <div className={style.headerBottomBox}>
+            <a href="">VALORANT</a>
+          </div>
+          <div className={style.headerBottomBox}>
+            <a href="">KAMPANYALAR</a>
+          </div>
+          <div className={style.headerBottomBox}>
+            <a href="">Platformlar</a>
+          </div>
+          <div className={style.headerBottomBox}>
+            <a href=""><HiGift /> Hediye & Cüzdan</a>
+          </div>
+          <div className={style.headerBottomBox}>
+            <a href="">Çekilişler</a>
+          </div>
+          <div className={style.headerBottomBox}>
+            <a href="">S2G MERCH</a>
+          </div>
+        </div>
       </div>
+      {isSidebarOpen && (
+        <div className={style.sidebar}>
+          <div className={style.sidebarClose} onClick={toggleSidebar}>
+            <FaTimes />
+          </div>
+          <div className={style.sidebarContent}>
+            <a href="">Tüm Ürünler</a>
+            <a href="">PUBG Mobile UC</a>
+            <a href="">Valorant VP</a>
+            <a href="">Brawl Stars</a>
+            <a href="">Mobile Legends</a>
+            <a href="">KAMPANYALAR</a>
+            <a href="">S2G MERCH</a>
+            <a href="">Çekilişler</a>
+            <a href="">Yayıncı Destekle</a>
+            <a href="">Bakiye Yükle</a>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
