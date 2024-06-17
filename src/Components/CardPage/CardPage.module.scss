@@ -1,0 +1,139 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.page {
+    width: 100%;
+    min-height: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #242426;
+
+    .container {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+
+        .cardTop {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .card {
+                width: 160px;
+                height: 350px;
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+                justify-content: space-around;
+                background-color: #26262B;
+
+                img {
+                    width: 160px;
+                    height: 250px;
+                }
+
+                p {
+                    width: 100%;
+                    font-size: 13px;
+                    font-weight: 600;
+                    color: white;
+                }
+
+                span {
+                    color: white;
+                }
+
+                .icons {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    span {
+                        color: white;
+                        font-size: 13px;
+                        font-weight: 600;
+                    }
+
+                    .star {
+                        .yellowStar {
+                            color: yellow;
+                            font-size: 15px;
+                        }
+
+                        .whiteStar {
+                            font-size: 15px;
+                            color: white;
+                        }
+                    }
+                }
+            }
+        }
+
+        .cardBottom {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .card {
+                width: 160px;
+                height: 350px;
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+                justify-content: space-around;
+                background-color: #26262B;
+
+                img {
+                    width: 160px;
+                    height: 250px;
+                }
+
+                p {
+                    width: 100%;
+                    font-size: 13px;
+                    font-weight: 600;
+                    color: white;
+                }
+
+                span {
+                    color: white;
+                }
+
+                .icons {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    span {
+                        color: white;
+                        font-size: 13px;
+                        font-weight: 600;
+                    }
+
+                    .star {
+                        .yellowStar {
+                            color: yellow;
+                            font-size: 15px;
+                        }
+
+                        .whiteStar {
+                            font-size: 15px;
+                            color: white;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
