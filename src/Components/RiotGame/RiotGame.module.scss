@@ -6,39 +6,69 @@
 
 .page {
     width: 100%;
-    min-height: 800px;
+    min-height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #242426;
 
     .container {
-        margin-top: 40px;
         width: 80%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 30px;
+        gap: 40px;
 
-        .containerTop {
+        .top {
             width: 100%;
             height: 70px;
-            background-image: url('../../Assets/Images/nihaiset.webp');
+            background-image: url('../../Assets/Images/riotGame.webp');
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
             display: flex;
             justify-content: start;
             align-items: center;
+            border-radius: 10px;
 
-            h1 {
-                margin-left: 20px;
-                color: white;
+            button {
+                width: 20%;
+                height: 70px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 20px;
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                position: relative;
+
+                img {
+                    width: 40px;
+                    height: 40px;
+                }
+
+                h5 {
+                    color: white;
+                    font-size: 10px;
+                }
+
+                &.selected {
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 2px;
+                        background-color: white;
+                    }
+                }
             }
         }
 
-        .cardBottom {
+        .bottom {
             width: 100%;
             display: flex;
             justify-content: space-between;
@@ -58,6 +88,7 @@
                 img {
                     width: 160px;
                     height: 250px;
+                    cursor: pointer;
                 }
 
                 p {
@@ -91,7 +122,7 @@
 
                         .whiteStar {
                             font-size: 15px;
-                            color: white;
+                            color: yellow;
                         }
                     }
                 }

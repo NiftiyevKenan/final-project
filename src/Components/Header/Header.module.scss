@@ -63,6 +63,10 @@
                             font-weight: 700;
                             color: #e0e1e5;
 
+                            &:hover {
+                                background-color: #e0e1e5;
+                                color: #000;
+                            }
                         }
 
                         .country {
@@ -79,6 +83,11 @@
                                 width: 20px;
                                 height: 20px;
                             }
+
+                            &:hover {
+                                background-color: #e0e1e5;
+                                color: #000;
+                            }
                         }
 
                         .whatchapp {
@@ -86,6 +95,11 @@
                             font-size: 12px;
                             font-weight: 700;
                             color: #77de51;
+
+                            &:hover {
+                                background-color: #77de51;
+                                color: #000;
+                            }
                         }
 
                         .money {
@@ -93,6 +107,11 @@
                             font-size: 12px;
                             font-weight: 700;
                             color: #77de51;
+
+                            &:hover {
+                                background-color: #77de51;
+                                color: #000;
+                            }
                         }
                     }
                 }
@@ -306,6 +325,11 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
+
+                    &:hover {
+                        background-color: #e0e1e5;
+                        color: #000;
+                    }
                 }
             }
         }
@@ -344,7 +368,7 @@
                 font-size: 18px;
 
                 &:hover {
-                    color: #007bff;
+                    background-color: #007bff;
                 }
             }
         }
@@ -388,7 +412,6 @@
             .headerTop {
                 .information {
                     width: 65%;
-
                 }
             }
 

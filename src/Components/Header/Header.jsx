@@ -1,29 +1,24 @@
-import React, { useState } from 'react'
-import style from './Header.module.scss'
-import { FaInstagram } from "react-icons/fa";
-import { IoLogoDiscord } from "react-icons/io5";
-import { FaTwitter } from "react-icons/fa";
-import { FaTiktok } from "react-icons/fa";
-import { IoSearch } from "react-icons/io5";
+import React, { useState } from 'react';
+import style from './Header.module.scss';
+import { FaInstagram, FaTwitter, FaTiktok, FaRegBell, FaRegEnvelope, FaRegUser, FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
+import { IoLogoDiscord, IoSearch } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
-import { FaRegBell } from "react-icons/fa";
-import { FaRegEnvelope } from "react-icons/fa";
-import { FaRegUser } from "react-icons/fa";
-import { FaShoppingCart } from "react-icons/fa";
-import { FaBars } from "react-icons/fa";
 import { HiGift } from "react-icons/hi";
-import { FaTimes } from "react-icons/fa";
-import TurkishFlag from '../../Assets/Images/tr.webp'
-import s2gepin from '../../Assets/Images/docs2gpin_logo_text_site_icin_beyaz optimize_b4ecb75d037cd64d81723a8a6900e9b2.webp'
+import TurkishFlag from '../../Assets/Images/tr.webp';
+import s2gepin from '../../Assets/Images/s2gepinlogo.webp';
 
 const Header = () => {
 
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isProfileOpen, setProfileOpen] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
+  const toggleProfile = () => {
+    setProfileOpen(!isProfileOpen);
+  };
 
   return (
     <div className={style.header}>
@@ -85,7 +80,7 @@ const Header = () => {
                 <span>0</span>
               </div>
             </div>
-            <div className={style.profil}>
+            <div className={style.profil} onMouseEnter={toggleProfile} onMouseLeave={toggleProfile}>
               <div className={style.profilContainer}>
                 <div className={style.icon}>
                   <FaRegUser />
@@ -100,6 +95,23 @@ const Header = () => {
                   </div>
                 </div>
               </div>
+              {isProfileOpen && (
+                <div className={style.dropdownMenu}>
+                  <a href="">Profilim</a>
+                  <a href="">Siparişlerim</a>
+                  <a href="">Satışlarım</a>
+                  <a href="">Cüzdanım</a>
+                  <a href="">Bakiye Yükle</a>
+                  <a href="">İlan Yönetimi</a>
+                  <a href="">İlan Mesajlarım</a>
+                  <a href="">Beğendiklerim</a>
+                  <a href="">Listelerim</a>
+                  <a href="">Kuponlarım</a>
+                  <a href="">Yayıncı Bilgilerim</a>
+                  <a href="">Kullanıcı Bilgilerim</a>
+                  <a href="">Destek Taleplerim</a>
+                </div>
+              )}
             </div>
             <div className={style.cart}>
               <div className={style.icon}>
@@ -114,7 +126,7 @@ const Header = () => {
             <a href="">Tüm Ürünler</a>
           </div>
           <div className={style.headerBottomBox}>
-            <a href=""> PUBG MOBILE</a>
+            <a href="">PUBG MOBILE</a>
           </div>
           <div className={style.headerBottomBox}>
             <a href="">VALORANT</a>
@@ -156,7 +168,7 @@ const Header = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
