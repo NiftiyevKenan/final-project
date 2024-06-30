@@ -12,25 +12,46 @@ import metin2 from '../../Assets/Images/docstory_ab7258592d554c605ca95d168da7f04
 import clash from '../../Assets/Images/doccoc_9a93aceb5b85266d7efa6c42874e116c.webp'
 import royale from '../../Assets/Images/doccr_4184226c4719b5a02db0d5056dd5c6ce.webp'
 import hayDay from '../../Assets/Images/dochayday_1d97782d9fe2da605ad5cfbe9ef8222e.webp'
+import { useNavigate } from 'react-router-dom'
 
 const GameSelection = () => {
+
+    const navigation = useNavigate()
+
+    const goToPubg = () => {
+        navigation('/pubg')
+    }
+
+    const goToValorant = () => {
+        navigation('/valorant')
+    }
+
+    const goToMobilLegend = () => {
+        navigation('/mobilLegend')
+    }
+
+    const goToBrawlStar = () => {
+        navigation('/brawlstar')
+    }
+
+
     return (
         <div className={style.page}>
             <div className={style.container}>
                 <div className={style.gameImg}>
-                    <img src={pubg} alt="pubg" />
+                    <img src={pubg} onClick={() => goToPubg()} alt="pubg" />
                 </div>
                 <div className={style.gameImg}>
-                    <img src={valorant} alt="valorant" />
+                    <img src={valorant} onClick={() => goToValorant()} alt="valorant" />
                 </div>
                 <div className={style.gameImg}>
-                    <img src={brawlStar} alt="brawlStar" />
+                    <img src={brawlStar} onClick={() => goToBrawlStar()} alt="brawlStar" />
                 </div>
                 <div className={style.gameImg}>
-                    <img src={lol} alt="lol" />
+                    <img src={lol}  onClick={() => goToMobilLegend()} alt="lol" />
                 </div>
                 <div className={style.gameImg}>
-                    <img src={mobilLegend} alt="mobilLegend" />
+                    <img src={mobilLegend} onClick={() => goToMobilLegend()} alt="mobilLegend" />
                 </div>
                 <div className={style.gameImg}>
                     <img src={steam} alt="steam" />

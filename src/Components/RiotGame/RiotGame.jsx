@@ -5,6 +5,8 @@ import { getSlicePubgThunk } from '../../Store/Reducers/getSlice';
 import { FaStar } from "react-icons/fa";
 import turkishFlag from '../../Assets/Images/turkishFlag.webp'
 import EU from '../../Assets/Images/europeFlag.webp'
+import { FaHeart } from "react-icons/fa";
+import { IoCartOutline } from "react-icons/io5";
 
 const RiotGame = () => {
 
@@ -60,7 +62,15 @@ const RiotGame = () => {
                                     </span>
                                     <span>({item.number})</span>
                                 </div>
-                                <span>{item.price}$</span>
+                                <div className={style.cart}>
+                                    <span>{item.price}$</span>
+                                    <div className={style.cartIcon}>
+                                        <span><IoCartOutline /></span>
+                                        <span>
+                                            <FaHeart />
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         ))
                     ) : (

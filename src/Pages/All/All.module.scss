@@ -6,71 +6,25 @@
 
 .page {
     width: 100%;
-    min-height: 500px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #242426;
 
-    .container {
-        width: 80%;
+
+    .cardPubg {
+        width: 100%;
+        background-color: #313338;
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 40px;
 
-        .top {
-            width: 100%;
-            height: 70px;
-            background-image: url('../../Assets/Images/docsuper-3_732fa7893e5b8ba87e2f68f864789f51.webp');
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+        .container {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            width: 80%;
             display: flex;
-            justify-content: start;
-            align-items: center;
-            border-radius: 10px;
-
-            button {
-                width: 13%;
-                height: 70px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 20px;
-                background-color: transparent;
-                border: none;
-                cursor: pointer;
-                position: relative;
-
-                img {
-                    width: 40px;
-                    height: 40px;
-                }
-
-                h5 {
-                    color: white;
-                    font-size: 10px;
-                }
-
-                &.selected {
-                    &::after {
-                        content: '';
-                        position: absolute;
-                        bottom: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 2px;
-                        background-color: white;
-                    }
-                }
-            }
-        }
-
-        .bottom {
-            width: 100%;
-            display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
@@ -88,7 +42,6 @@
                 img {
                     width: 160px;
                     height: 250px;
-                    cursor: pointer;
                 }
 
                 p {
@@ -122,7 +75,7 @@
 
                         .whiteStar {
                             font-size: 15px;
-                            color: yellow;
+                            color: white;
                         }
                     }
                 }
@@ -153,7 +106,6 @@
         }
     }
 }
-
 
 @media screen and (min-width:1200px) and (max-width:1400px) {}
 

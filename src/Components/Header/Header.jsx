@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './Header.module.scss';
 import { FaInstagram, FaTwitter, FaTiktok, FaRegBell, FaRegEnvelope, FaRegUser, FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
 import { IoLogoDiscord, IoSearch } from "react-icons/io5";
@@ -6,11 +6,14 @@ import { IoIosArrowDown } from "react-icons/io";
 import { HiGift } from "react-icons/hi";
 import TurkishFlag from '../../Assets/Images/tr.webp';
 import s2gepin from '../../Assets/Images/s2gepinlogo.webp';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
 
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isProfileOpen, setProfileOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -19,6 +22,51 @@ const Header = () => {
   const toggleProfile = () => {
     setProfileOpen(!isProfileOpen);
   };
+
+  const navigate = useNavigate();
+
+  const goToBasket = () => {
+    navigate('/basket');
+  };
+
+  const goToHome = () => {
+    navigate('/');
+  };
+
+  const goToPubg = () => {
+    navigate('/pubg');
+  };
+
+  const goToValorant = () => {
+    navigate('/valorant');
+  };
+
+  const goToAll = () => {
+    navigate('/all');
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const fetchSearchResults = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/Pubg`);
+      const data = await response.json();
+      const filteredResults = data.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
+      setSearchResults(filteredResults);
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (searchQuery) {
+      fetchSearchResults();
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchQuery]);
 
   return (
     <div className={style.header}>
@@ -61,12 +109,26 @@ const Header = () => {
             <FaBars />
           </div>
           <div className={style.left}>
-            <div className={style.logo}>
+            <div className={style.logo} onClick={() => goToHome()}>
               <img src={s2gepin} alt="logo" />
             </div>
             <div className={style.search}>
-              <input type="text" placeholder='Ürün, kategori veya marka ara' />
+              <input 
+                type="text" 
+                placeholder='Ürün, kategori veya marka ara' 
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
               <button><IoSearch /></button>
+              {searchResults.length > 0 && (
+                <div className={style.searchResults}>
+                  <ul>
+                    {searchResults.map(result => (
+                      <li key={result.id}>{result.title}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
           <div className={style.account}>
@@ -95,7 +157,7 @@ const Header = () => {
                   </div>
                 </div>
               </div>
-              {isProfileOpen && (
+              {/* {isProfileOpen && (
                 <div className={style.dropdownMenu}>
                   <a href="">Profilim</a>
                   <a href="">Siparişlerim</a>
@@ -111,10 +173,10 @@ const Header = () => {
                   <a href="">Kullanıcı Bilgilerim</a>
                   <a href="">Destek Taleplerim</a>
                 </div>
-              )}
+              )} */}
             </div>
             <div className={style.cart}>
-              <div className={style.icon}>
+              <div className={style.icon} onClick={() => goToBasket()}>
                 <FaShoppingCart />
                 <span>0</span>
               </div>
@@ -123,13 +185,13 @@ const Header = () => {
         </div>
         <div className={style.headerBottom}>
           <div className={style.headerBottomBox}>
-            <a href="">Tüm Ürünler</a>
+            <a href="" onClick={() => goToAll()}>Tüm Ürünler</a>
           </div>
           <div className={style.headerBottomBox}>
-            <a href="">PUBG MOBILE</a>
+            <a href="" onClick={() => goToPubg()}>PUBG MOBILE</a>
           </div>
           <div className={style.headerBottomBox}>
-            <a href="">VALORANT</a>
+            <a href="" onClick={() => goToValorant()}>VALORANT</a>
           </div>
           <div className={style.headerBottomBox}>
             <a href="">KAMPANYALAR</a>

@@ -1,8 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { mobilLegendReducer, pubgReducer } from "./Reducers/getSlice";
+import { pubgReducer } from "./Reducers/getSlice";
+import authSlice from "./Reducers/authSlice";
+import { apiSlice } from "./Reducers/apiSlice";
 
-export const store = configureStore({
+const store = configureStore({
     reducer: {
-        pubgReducer
-    }
-})
+        pubgReducer,
+        auth: authSlice,
+        [apiSlice.reducerPath]: apiSlice.reducer
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware)
+});
+
+export  {store}

@@ -1,27 +1,42 @@
-* {
+*{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-.page {
+.page{
     width: 100%;
-    min-height: 500px;
-    background-color: #242426;
+    min-height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #222326;
 
-    .container {
+    .container{
         width: 80%;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-        img {
-            width: 20%;
-            height: 400px;
-            cursor: pointer;
+        .card{
+            width: 24%;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+
+            p{
+                width: 80%;
+                text-align: center;
+                color: white
+            }
+
+            h5{
+                color: white;
+                font-size: 15px;
+            }
+
         }
     }
 }
@@ -32,56 +47,43 @@
 
 
 @media screen and (min-width:768px) and (max-width:992px) {
-    .page {
-        .container {
+.page{
+    .container{
+        width: 90%;
+    }
+}
+}
+
+@media screen and (min-width:576px) and (max-width:768px) {
+    .page{
+        .container{
             width: 90%;
+            margin-top: 20px;
+            margin-bottom: 20px;
             display: flex;
-            margin-top: 30px;
-            margin-bottom: 30px;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
             gap: 20px;
-
-            img {
+            .card{
                 width: 40%;
             }
         }
     }
 }
 
-@media screen and (min-width:576px) and (max-width:768px) {
-    .page {
-        .container {
-            width: 90%;
-            margin-top: 30px;
-            margin-bottom: 30px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-
-            img {
-                width: 50%;
-            }
-        }
-    }
-}
-
 @media screen and (min-width:300px) and (max-width:576px) {
-    .page {
-        .container {
-            margin-top: 30px;
-            margin-bottom: 30px;
+    .page{
+        .container{
             width: 90%;
+            margin-top: 20px;
+            margin-bottom: 20px;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
             gap: 20px;
-
-            img {
+            .card{
                 width: 70%;
             }
         }

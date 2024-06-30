@@ -7,6 +7,8 @@ import clashBtn from '../../Assets/Images/clashBtn.webp';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSlicePubgThunk } from '../../Store/Reducers/getSlice';
 import { FaStar } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import { IoCartOutline } from "react-icons/io5";
 
 const Supercell = () => {
     const [selectedCategory, setSelectedCategory] = useState('BrawlStars'); 
@@ -68,7 +70,15 @@ const Supercell = () => {
                                     </span>
                                     <span>({item.number})</span>
                                 </div>
-                                <span>{item.price}$</span>
+                                <div className={style.cart}>
+                                    <span>{item.price}$</span>
+                                    <div className={style.cartIcon}>
+                                        <span><IoCartOutline /></span>
+                                        <span>
+                                            <FaHeart />
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         ))
                     ) : (
