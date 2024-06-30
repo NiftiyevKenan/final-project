@@ -26,27 +26,28 @@ const Register = () => {
     }
   }, [navigation, userInfo]);
 
-
-
   const handleRegister = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('Sifreler duz deyil');
+      toast.error('Şifreler uyuşmuyor');
       return;
     }
     try {
       const res = await register({ name, email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
-      navigation('/dashboard');
+      toast.success('Kayıt başarılı. Şimdi giriş yapabilirsiniz.');
+      setTimeout(() => {
+        navigation('/login');
+      }, 2000);
     } catch (error) {
-      toast.error('Register fail');
+      toast.error('Kayıt işlemi başarısız');
     }
   }
 
   return (
     <section className={styles.container}>
       <div className={styles.auth}>
-        <h1>TODO APP REGISTER</h1>
+        <h1>S2GEPIN REGISTER</h1>
         <form onSubmit={handleRegister}>
           <input
             type="text"
@@ -77,11 +78,11 @@ const Register = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <button type="submit" disabled={isLoading}>
-            {isLoading ? 'User creating' : 'Register'}
+            {isLoading ? 'Kullanıcı oluşturuluyor...' : 'Register'}
           </button>
         </form>
         <p className={styles.loginmessage} onClick={() => navigation('/login')}>
-          <span>Login</span>
+          <span>Giriş yapmak için tıklayın</span>
         </p>
       </div>
     </section>

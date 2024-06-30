@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const Basket = () => {
-
   const [basketItems, setBasketItems] = useState([]);
   const { userInfo } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -30,7 +29,7 @@ const Basket = () => {
     const updatedBasketItems = basketItems.map(item => {
       if (item.id === itemId) {
         const newCount = item.count + 1;
-        const newPrice = item.price / item.count * newCount;
+        const newPrice = (item.price / item.count) * newCount;
 
         return {
           ...item,
@@ -50,15 +49,13 @@ const Basket = () => {
       if (item.id === itemId) {
         if (item.count > 1) {
           const newCount = item.count - 1;
-          const newPrice = item.price / item.count * newCount;
+          const newPrice = (item.price / item.count) * newCount;
 
           return {
             ...item,
             count: newCount,
             price: newPrice.toFixed(2)
           };
-        } else {
-          return null;
         }
       }
       return item;
@@ -68,10 +65,17 @@ const Basket = () => {
     setBasketItems(updatedBasketItems);
   };
 
+  const handleRemoveItem = (itemId) => {
+    const updatedBasketItems = basketItems.filter(item => item.id !== itemId);
+
+    localStorage.setItem('basketList', JSON.stringify(updatedBasketItems));
+    setBasketItems(updatedBasketItems);
+  };
+
   const filteredBasketItems = userInfo ? basketItems.filter(item => item._id === userInfo._id) : [];
 
-  const handlePayment = (itemPrice) => {
-    navigate('/basket/odenis', { state: { itemPrice } });
+  const handlePayment = (item) => {
+    navigate('/basket/odenis', { state: { itemPrice: item.price } });
   };
 
   const handleBasketView = () => {
@@ -96,16 +100,16 @@ const Basket = () => {
         <ul>
           {filteredBasketItems.map((item, index) => (
             <li key={index}>
-              <div className={styles.image}><img src={item.Image} alt={item.title} /></div>
+              <div className={styles.image}><img src={item.image} alt={item.title} /></div>
               <div>
                 <h3>{item.title}</h3>
                 <p>Qiymət: {item.price} ₼</p>
                 <p>Ədəd: {item.count}</p>
                 <div className={styles.btns}>
                   <button onClick={() => handleIncreaseQuantity(item.id)}>Artır</button>
-                  {item.count === 1 && <button onClick={() => handleDecreaseQuantity(item.id)}>Sil</button>}
-                  {item.count > 1 && <button onClick={() => handleDecreaseQuantity(item.id)}>Azalt</button>}
-                  <button onClick={() => handlePayment(item.price)}>Buy</button>
+                  <button onClick={() => handleDecreaseQuantity(item.id)}>Azalt</button>
+                  <button onClick={() => handleRemoveItem(item.id)}>Sil</button>
+                  <button onClick={() => handlePayment(item)}>Buy</button>
                 </div>
               </div>
             </li>

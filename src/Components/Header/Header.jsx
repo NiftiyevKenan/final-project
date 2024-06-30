@@ -7,14 +7,16 @@ import { HiGift } from "react-icons/hi";
 import TurkishFlag from '../../Assets/Images/tr.webp';
 import s2gepin from '../../Assets/Images/s2gepinlogo.webp';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useLogoutMutation } from '../../Store/Reducers/userApiSlice';
 
 const Header = () => {
-
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isProfileOpen, setProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-
+  const [basketCount, setBasketCount] = useState(0);
+  const [logoutUser, { data, isLoading, isSuccess, isError }] = useLogoutMutation();
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
@@ -27,6 +29,10 @@ const Header = () => {
 
   const goToBasket = () => {
     navigate('/basket');
+  };
+
+  const goToAdmin = () => {
+    navigate('/admin');
   };
 
   const goToHome = () => {
@@ -43,6 +49,10 @@ const Header = () => {
 
   const goToAll = () => {
     navigate('/all');
+  };
+
+  const goToWish = () => {
+    navigate('/wish');
   };
 
   const handleSearchChange = (e) => {
@@ -67,6 +77,38 @@ const Header = () => {
       setSearchResults([]);
     }
   }, [searchQuery]);
+
+  useEffect(() => {
+    // Function to update basket count
+    const updateBasketCount = () => {
+      const storedBasket = localStorage.getItem('basketList');
+      if (storedBasket) {
+        const basketList = JSON.parse(storedBasket);
+        setBasketCount(basketList.length);
+      } else {
+        setBasketCount(0);
+      }
+    };
+
+    // Initial count
+    updateBasketCount();
+
+    // Listen for localStorage changes
+    window.addEventListener('storage', updateBasketCount);
+
+    // Cleanup event listener on unmount
+    return () => {
+      window.removeEventListener('storage', updateBasketCount);
+    };
+  }, []);
+
+  // Redux'den kullanıcı bilgilerini alma
+  const { userInfo } = useSelector(state => state.auth);
+
+  const handleLogout = () => {
+    logoutUser(); // Trigger the logout mutation
+    navigate('/'); // Navigate to the home page after logout
+  };
 
   return (
     <div className={style.header}>
@@ -148,37 +190,42 @@ const Header = () => {
                   <FaRegUser />
                 </div>
                 <div className={style.profilName}>
-                  <div className={style.login}>
-                    <h4>Giriş yap</h4>
-                    <span>veya üye ol</span>
-                  </div>
-                  <div className={style.iconArrow}>
-                    <IoIosArrowDown />
-                  </div>
+                  {userInfo ? (
+                    <div className={style.loggedIn}>
+                      <h4>{userInfo.name}</h4>
+                      <span>{userInfo.email}</span>
+                    </div>
+                  ) : (
+                    <>
+                      <div className={style.login}>
+                        <h4>Giriş yap</h4>
+                        <span>veya üye ol</span>
+                      </div>
+                      <div className={style.iconArrow}>
+                        <IoIosArrowDown />
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
-              {/* {isProfileOpen && (
-                <div className={style.dropdownMenu}>
-                  <a href="">Profilim</a>
-                  <a href="">Siparişlerim</a>
-                  <a href="">Satışlarım</a>
-                  <a href="">Cüzdanım</a>
-                  <a href="">Bakiye Yükle</a>
-                  <a href="">İlan Yönetimi</a>
-                  <a href="">İlan Mesajlarım</a>
-                  <a href="">Beğendiklerim</a>
-                  <a href="">Listelerim</a>
-                  <a href="">Kuponlarım</a>
-                  <a href="">Yayıncı Bilgilerim</a>
-                  <a href="">Kullanıcı Bilgilerim</a>
-                  <a href="">Destek Taleplerim</a>
-                </div>
-              )} */}
+              <div className={style.profileDropdown} style={{ display: isProfileOpen ? 'block' : 'none' }}>
+                {userInfo ? (
+                  <>
+                    <a href="#">Profilim</a>
+                    <a href="#" onClick={goToHome} >Çıkış Yap</a>
+                  </>
+                ) : (
+                  <>
+                    <a href="/login">Giriş Yap</a>
+                    <a href="/register">Kayıt Ol</a>
+                  </>
+                )}
+              </div>
             </div>
             <div className={style.cart}>
               <div className={style.icon} onClick={() => goToBasket()}>
                 <FaShoppingCart />
-                <span>0</span>
+                <span>{basketCount}</span>
               </div>
             </div>
           </div>
@@ -203,10 +250,10 @@ const Header = () => {
             <a href=""><HiGift /> Hediye & Cüzdan</a>
           </div>
           <div className={style.headerBottomBox}>
-            <a href="">Çekilişler</a>
+            <a href="" onClick={() => goToAdmin()}>AdminPanel</a>
           </div>
           <div className={style.headerBottomBox}>
-            <a href="">S2G MERCH</a>
+            <a href="" onClick={() => goToWish()}>WishList</a>
           </div>
         </div>
       </div>
@@ -218,14 +265,17 @@ const Header = () => {
           <div className={style.sidebarContent}>
             <a href="">Tüm Ürünler</a>
             <a href="">PUBG Mobile UC</a>
-            <a href="">Valorant VP</a>
-            <a href="">Brawl Stars</a>
-            <a href="">Mobile Legends</a>
-            <a href="">KAMPANYALAR</a>
-            <a href="">S2G MERCH</a>
-            <a href="">Çekilişler</a>
-            <a href="">Yayıncı Destekle</a>
-            <a href="">Bakiye Yükle</a>
+            <a href="">Valorant Points</a>
+            <a href="">Free Fire Diamonds</a>
+            <a href="">PUBG Mobile Lite BC</a>
+            <a href="">Call Of Duty Points</a>
+            <a href="">Google Play Gift Cards</a>
+            <a href="">iTunes Gift Cards</a>
+            <a href="">Netfilx Gift Cards</a>
+            <a href="">XBOX Gift Cards</a>
+            <a href="">PlayStation Gift Cards</a>
+            <a href="">Steam Gift Cards</a>
+            <a href="">S2G</a>
           </div>
         </div>
       )}

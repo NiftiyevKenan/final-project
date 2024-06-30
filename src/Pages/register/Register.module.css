@@ -1,9 +1,12 @@
 .container {
-    background-color: red !important;
     width: 100%;
 }
+
 .auth {
-    background-color: #ffffff;
+    background-image: url("https://assets.hyperteknoloji.com/cdn/s2gepin/category/docKATEGOR%C4%B0_e20aaa4edb3be1c03413b7afab7c9427.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     display: inline-block;
     position: absolute;
     top: 50%;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -7,11 +7,20 @@ import Footer from '../../Components/Footer/Footer';
 
 const Payment = () => {
     const location = useLocation();
-    const [itemPrice, setItemPrice] = useState(location.state && location.state.itemPrice);
+    const navigate = useNavigate();
+    
+    // itemPrice'ı kontrol et
+    const [itemPrice, setItemPrice] = useState(location.state?.itemPrice || 0);
     const [cardNumber, setCardNumber] = useState('');
     const [expiryDate, setExpiryDate] = useState('');
     const [cvv, setCvv] = useState('');
-    const navigation = useNavigate();
+
+    useEffect(() => {
+        if (itemPrice === 0) {
+            toast.error('Ödeme için geçerli bir ürün seçilmedi.');
+            navigate('/basket');
+        }
+    }, [itemPrice, navigate]);
 
     const handleCardNumberChange = (e) => {
         let formattedCardNumber = e.target.value.replace(/\s/g, '');
@@ -42,12 +51,6 @@ const Payment = () => {
 
         if (!itemPrice || parseFloat(itemPrice) <= 0) {
             toast.error('Ürün fiyatı geçersiz.');
-            return;
-        }
-
-        const enteredAmount = parseFloat(cardNumber.replace(/\s/g, ''));
-        if (enteredAmount < parseFloat(itemPrice)) {
-            toast.error('Yeterli para girilmedi.');
             return;
         }
 
@@ -86,102 +89,109 @@ const Payment = () => {
             setCvv('');
             // Update itemPrice to 0 after successful payment
             setItemPrice(0);
+            navigate('/'); // Redirect to home page after payment
         }, 2000);
     };
 
     const goHome = () => {
-        navigation('/')
+        navigate('/');
     }
+
     return (
         <div>
-            <Header/>
-<div className="flex justify-center items-center h-screen">
-            <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96">
-                <h2 className="text-lg mb-4">Ödəniş Formu</h2>
-                <p>Qiymət: {itemPrice}$</p>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">
-                            Kart Nömrəsi
-                        </label>
-                        <input
-                            type="text"
-                            value={cardNumber}
-                            onChange={handleCardNumberChange}
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="XXXX XXXX XXXX XXXX"
-                            maxLength="19"
-                            required
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">
-                            Bitmə Tarixi
-                        </label>
-                        <input
-                            type="text"
-                            value={expiryDate}
-                            onChange={handleExpiryDateChange}
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="MM/YY"
-                            maxLength="5"
-                            required
-                        />
-                    </div>
-                    <div className="mb-4 relative">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">
-                            CVV
-                        </label>
-                        <input
-                            type="password"
-                            value={cvv}
-                            onChange={handleCvvChange}
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="***"
-                            maxLength="3"
-                            required
-                        />
-                        <button
-                            type="button"
-                            className="absolute right-0 top-0 mt-3 mr-4"
-                            onClick={handleShowCvv}
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 text-gray-500 hover:text-gray-700 cursor-pointer"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9a1 1 0 112 0v4a1 1 0 11-2 0v-4z"
-                                    clipRule="evenodd"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                    <div style={{display:"flex", gap:"10px"}}>
-                        <button
-                        type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                        Ödə
-                    </button>
-                    <button
-                        onClick={goHome}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                        Ləğv Et
-                    </button>
-                    </div>
-                    
-                </form>
+            <Header />
+            <div className="flex justify-center items-center h-screen">
+                <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96">
+                    <h2 className="text-lg mb-4">Ödəniş Formu</h2>
+                    {itemPrice > 0 ? (
+                        <>
+                            <p>Qiymət: {itemPrice}₼</p>
+                            <form onSubmit={handleSubmit}>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                                        Kart Nömrəsi
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={cardNumber}
+                                        onChange={handleCardNumberChange}
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        placeholder="XXXX XXXX XXXX XXXX"
+                                        maxLength="19"
+                                        required
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                                        Bitmə Tarixi
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={expiryDate}
+                                        onChange={handleExpiryDateChange}
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        placeholder="MM/YY"
+                                        maxLength="5"
+                                        required
+                                    />
+                                </div>
+                                <div className="mb-4 relative">
+                                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                                        CVV
+                                    </label>
+                                    <input
+                                        type="password"
+                                        value={cvv}
+                                        onChange={handleCvvChange}
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        placeholder="***"
+                                        maxLength="3"
+                                        required
+                                    />
+                                    <button
+                                        type="button"
+                                        className="absolute right-0 top-0 mt-3 mr-4"
+                                        onClick={handleShowCvv}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="h-6 w-6 text-gray-500 hover:text-gray-700 cursor-pointer"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9a1 1 0 112 0v4a1 1 0 11-2 0v-4z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div style={{ display: "flex", gap: "10px" }}>
+                                    <button
+                                        type="submit"
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                    >
+                                        Ödə
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={goHome}
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                    >
+                                        Ləğv Et
+                                    </button>
+                                </div>
+                            </form>
+                        </>
+                    ) : (
+                        <p>Geçerli bir ürün seçilmedi.</p>
+                    )}
+                </div>
+                <ToastContainer position="bottom-center" />
             </div>
-            <ToastContainer position="bottom-center" />
+            <Footer />
         </div>
-        <Footer/>
-        </div>
-        
     );
 };
 

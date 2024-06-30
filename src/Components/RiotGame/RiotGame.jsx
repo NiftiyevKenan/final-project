@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import style from './RiotGame.module.scss'
+import React, { useEffect, useState } from 'react';
+import style from './RiotGame.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSlicePubgThunk } from '../../Store/Reducers/getSlice';
-import { FaStar } from "react-icons/fa";
-import turkishFlag from '../../Assets/Images/turkishFlag.webp'
-import EU from '../../Assets/Images/europeFlag.webp'
-import { FaHeart } from "react-icons/fa";
-import { IoCartOutline } from "react-icons/io5";
+import { FaStar, FaHeart } from 'react-icons/fa';
+import turkishFlag from '../../Assets/Images/turkishFlag.webp';
+import EU from '../../Assets/Images/europeFlag.webp';
+import { IoCartOutline } from 'react-icons/io5';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const RiotGame = () => {
-
-    const [selectedCategory, setSelectedCategory] = useState('Valorant'); 
-
+    const [selectedCategory, setSelectedCategory] = useState('Valorant');
     const dispatch = useDispatch();
     const dataPubg = useSelector((state) => state.pubgReducer.products);
+    const { userInfo } = useSelector(state => state.auth);
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(getSlicePubgThunk());
@@ -21,8 +22,51 @@ const RiotGame = () => {
 
     const filteredProducts = dataPubg.filter(item => item.category === selectedCategory);
 
-  return (
-    <div className={style.page}>
+    const handleAddToBag = (item) => {
+        if (!userInfo) {
+            toast.warn('Sepete eklemek için kayıt olmalısınız.');
+            setTimeout(() => {
+                navigate('/register', { state: { from: window.location.pathname } });
+            }, 3000);
+            return;
+        }
+
+        const storedUserInfo = localStorage.getItem('userInfo');
+        let basketList = [];
+
+        if (storedUserInfo) {
+            const userInfoObject = JSON.parse(storedUserInfo);
+
+            const productToAdd = {
+                _id: userInfo._id,
+                id: item.id,
+                title: item.title,
+                price: item.price,
+                image: item.image
+            };
+
+            // Retrieve existing basketList from localStorage
+            if (localStorage.getItem('basketList')) {
+                basketList = JSON.parse(localStorage.getItem('basketList'));
+            }
+
+            // Add the product to basketList
+            basketList.push(productToAdd);
+            toast.success(`${item.title} sepete eklendi!`);
+
+            // Update localStorage with updated basketList
+            localStorage.setItem('basketList', JSON.stringify(basketList));
+
+            // Update the basket count
+            const basketCount = basketList.length;
+            window.dispatchEvent(new Event('storage')); // Trigger a storage event
+        } else {
+            console.log('Kullanıcı bilgisi bulunamadı. Giriş yapmalısınız.');
+        }
+    };
+
+    return (
+        <div className={style.page}>
             <div className={style.container}>
                 <div className={style.top}>
                     <button
@@ -65,7 +109,9 @@ const RiotGame = () => {
                                 <div className={style.cart}>
                                     <span>{item.price}$</span>
                                     <div className={style.cartIcon}>
-                                        <span><IoCartOutline /></span>
+                                        <span onClick={() => handleAddToBag(item)}>
+                                            <IoCartOutline />
+                                        </span>
                                         <span>
                                             <FaHeart />
                                         </span>
@@ -79,7 +125,7 @@ const RiotGame = () => {
                 </div>
             </div>
         </div>
-  )
-}
+    );
+};
 
-export default RiotGame
+export default RiotGame;

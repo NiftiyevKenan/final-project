@@ -34,13 +34,13 @@ const CardPage = () => {
             }, 3000);
             return;
         }
-    
+
         const storedUserInfo = localStorage.getItem('userInfo');
         let basketList = [];
-    
+
         if (storedUserInfo) {
             const userInfoObject = JSON.parse(storedUserInfo);
-    
+
             const productToAdd = {
                 _id: userInfo._id,
                 id: item.id,
@@ -48,18 +48,68 @@ const CardPage = () => {
                 price: item.price,
                 image: item.image
             };
-    
+
             // Retrieve existing basketList from localStorage
             if (localStorage.getItem('basketList')) {
                 basketList = JSON.parse(localStorage.getItem('basketList'));
             }
-    
+
             // Add the product to basketList
             basketList.push(productToAdd);
             toast.success(`${item.title} sepete eklendi!`);
-    
+
             // Update localStorage with updated basketList
             localStorage.setItem('basketList', JSON.stringify(basketList));
+
+            // Update the basket count
+            const basketCount = basketList.length;
+            window.dispatchEvent(new Event('storage')); // Trigger a storage event
+        } else {
+            console.log('Kullanıcı bilgisi bulunamadı. Giriş yapmalısınız.');
+        }
+    };
+
+    const handleAddToWishlist = (item) => {
+        if (!userInfo) {
+            toast.warn('Favorilere eklemek için kayıt olmalısınız.');
+            setTimeout(() => {
+                navigate('/register', { state: { from: window.location.pathname } });
+            }, 3000);
+            return;
+        }
+
+        const storedUserInfo = localStorage.getItem('userInfo');
+        let wishlist = [];
+
+        if (storedUserInfo) {
+            const userInfoObject = JSON.parse(storedUserInfo);
+
+            const productToAdd = {
+                _id: userInfo._id,
+                id: item.id,
+                title: item.title,
+                price: item.price,
+                image: item.image
+            };
+
+            // Retrieve existing wishlist from localStorage
+            if (localStorage.getItem('wishlist')) {
+                wishlist = JSON.parse(localStorage.getItem('wishlist'));
+            }
+
+            // Check if the product is already in the wishlist
+            const existingItem = wishlist.find((wishlistItem) => wishlistItem.id === item.id);
+            if (existingItem) {
+                toast.warn(`${item.title} zaten favorilere eklenmiş.`);
+                return;
+            }
+
+            // Add the product to wishlist
+            wishlist.push(productToAdd);
+            toast.success(`${item.title} favorilere eklendi!`);
+
+            // Update localStorage with updated wishlist
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
         } else {
             console.log('Kullanıcı bilgisi bulunamadı. Giriş yapmalısınız.');
         }
@@ -92,7 +142,7 @@ const CardPage = () => {
                                         <span onClick={() => handleAddToBag(item)}>
                                             <IoCartOutline />
                                         </span>
-                                        <span>
+                                        <span onClick={() => handleAddToWishlist(item)}>
                                             <FaHeart />
                                         </span>
                                     </div>

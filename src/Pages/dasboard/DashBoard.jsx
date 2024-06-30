@@ -12,7 +12,7 @@ const Dashboard = () => {
   
   useEffect(() => {
     if (!userInfo) {
-      navigate('/login');
+      navigate('/main');
     }
    
   }, [navigate, userInfo, dispatch]);
@@ -23,7 +23,7 @@ const Dashboard = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <button onClick={() => navigate('/profile')} className={styles.profileButton}>Go to Profile</button>
-        <button onClick={() => navigate('/add-new-todo')} className={styles.addButton}>Add new TODO task</button>
+        <button onClick={() => navigate('/main')} className={styles.addButton}>Main</button>
       </div>
       <div className={styles.todoList}>
         
